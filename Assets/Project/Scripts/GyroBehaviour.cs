@@ -9,20 +9,14 @@ using System;
 
 public class GyroBehaviour : MonoBehaviour
 {
-    public Transform Target;
+    public Transform GyroRoot;
+    public Transform GyroTarget;
     Gyroscope gyro => Input.gyro;
 
     UdpClient udpClient;
 
     [SerializeField] string OPENTRACK_IP = "127.0.0.1";
     [SerializeField] int OPENTRACK_PORT = 4242;
-
-    void OnEnable()
-    {
-        //var ipEndPoint = new IPEndPoint(IPAddress.Parse(OPENTRACK_IP), OPENTRACK_PORT);
-        //udpClient = new UdpClient();
-        //udpClient.Connect(ipEndPoint);
-    }
 
     void OnDisable()
     {
@@ -43,17 +37,29 @@ public class GyroBehaviour : MonoBehaviour
         udpClient.Connect(ipEndPoint);
     }
 
+    public void Calibrate()
+    {
+        GyroRoot.rotation = GyroTarget.rotation;
+        UpdateGyro();
+    }
+
     void Update()
     {
         if (udpClient == null)
             return;
 
+        UpdateGyro();
+
+        var byteArray = BuildMessage(GyroTarget.localEulerAngles);
+        udpClient.Send(byteArray, byteArray.Length);
+    }
+
+    void UpdateGyro()
+    {
         if (gyro.enabled)
         {
-            Target.rotation = gyro.attitude;
+            GyroTarget.rotation = gyro.attitude;
         }
-        var byteArray = BuildMessage(Target.eulerAngles);
-        udpClient.Send(byteArray, byteArray.Length);
     }
 
     private byte[] BuildMessage(Vector3 orientation)
