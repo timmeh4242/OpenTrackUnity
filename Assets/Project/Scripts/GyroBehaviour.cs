@@ -1,14 +1,14 @@
 ﻿using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
-using System.Text;
 using System.Linq;
 using System;
 
 public class GyroBehaviour : MonoBehaviour
 {
+    public Vector3 RawEulers => GyroTarget.eulerAngles;
+    public Vector3 CalibratedEulers => GyroTarget.localEulerAngles;
+
     public Transform GyroRoot;
     public Transform GyroTarget;
     Gyroscope gyro => Input.gyro;
@@ -50,7 +50,7 @@ public class GyroBehaviour : MonoBehaviour
 
         UpdateGyro();
 
-        var byteArray = BuildMessage(GyroTarget.localEulerAngles);
+        var byteArray = BuildMessage(CalibratedEulers);
         udpClient.Send(byteArray, byteArray.Length);
     }
 
