@@ -45,13 +45,13 @@ public class GyroBehaviour : MonoBehaviour
 
     void Update()
     {
-        if (udpClient == null)
-            return;
-
         UpdateGyro();
 
-        var byteArray = BuildMessage(CalibratedEulers);
-        udpClient.Send(byteArray, byteArray.Length);
+        if(udpClient != null)
+        {
+            var byteArray = BuildMessage(CalibratedEulers);
+            udpClient.Send(byteArray, byteArray.Length);
+        }
     }
 
     void UpdateGyro()
