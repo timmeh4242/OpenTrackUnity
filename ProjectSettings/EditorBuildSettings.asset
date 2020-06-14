@@ -9,11 +9,11 @@ EditorBuildSettings:
     path: Assets/Project/Scenes/MainScene.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
   - enabled: 1
-    path: Assets/Temp/Scenes/FaceTracking/FacePose.unity
-    guid: d8b65509a10894e1dbb93c799ececfd9
-  - enabled: 1
-    path: Assets/Temp/Scenes/FaceTracking/FaceMesh.unity
+    path: Assets/ARFoundation/Samples/Scenes/FaceTracking/FaceMesh.unity
     guid: 047514b96a5d44d6bb0acbfa06ace943
+  - enabled: 1
+    path: Assets/ARFoundation/Samples/Scenes/FaceTracking/FacePose.unity
+    guid: d8b65509a10894e1dbb93c799ececfd9
   m_configObjects:
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: 20b5f46a2f1d90c4c852a7963eec495a,
       type: 2}
