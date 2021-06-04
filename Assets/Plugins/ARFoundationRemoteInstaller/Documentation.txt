@@ -1,0 +1,62 @@
+Fast iterations are crucial for development. Unity Editor does not currently support AR mocking and testing so you're required to make a new build after any minor change. And builds take a looooong time even for small projects. Now you have the solution!
+
+AR Foundation Editor Remote is an Editor extension that allows you to transmit AR session data from AR capable device to Unity Editor.
+This plugin is developed to speed up the development process of AR projects. While its functionality is currently limited (see Limitations section below), it will jump-start the development of any AR project.
+
+Features:
+1. Supports all AR Foundation platforms. Extensively tested with ARKit and ARCore. Feedback on running on other AR devices (Magic Leap, Holo Lens, etc.) is very appreciated.
+2. Wi-Fi or wired connection is supported.
+3. No additional scene setup is needed, just run any AR Foundation scene in Editor.
+4. Written in pure C# with no third party libraries or native code. Adds no performance overhead in production.
+
+Supported AR subsystems:
+1. Face Tracking: face mesh, face pose, eye tracking, ARKit Blendshapes.
+2. Plane Tracking: horizontal and vertical plane detection, boundary vertices, raycast support.
+3. Depth Tracking: cloud points, raycast support.
+4. Camera position and rotation.
+5. Remote control over AR Session lifetime: create/destroy, enable/disable, receive tracking state.
+
+Requirements:
+1. Unity 2019.3 or newer (Unity 2019.2 is also supported, please refer to the Documentation for instructions).
+2. Device with AR capabilities (iPhone with ARKit support, Android with ARCore support, Magic Leap, Holo Lens, etc.).
+3. git installed on your machine.
+
+Limitations:
+1. Video streaming is not supported which should not be a problem for majority of AR projects.
+2. The lowest supported version of AR Foundation is 3.0.1.
+
+Installation:
+1. ARFoundationRemoteInstaller will install AR Foundation Remote from git repository via Package Manager automatically after importing the plugin to Unity.
+2. If automatic installation fails, please read Console errors, update required dependencies via Window -> Package Manager, then select an Installer object and press InstallOrUpdate button.
+3. Install an AR Foundation Plug-in Provider (ARKit XR Plugin, ARCore XR Plugin, etc.) via Package Manager. Please choose the version compatible with AR Foundation 3.0.1. (For example, ARKit XR Plugin v3.0.1 or newer/ARCore XR Plugin v3.0.1 or newer).
+4. To enable iOS face tracking, install ARKit Face Tracking 3.0.1 or newer via Package Manager.
+5. To enable ARKit Blendshapes, add this define to iOS build target in Project Settings -> Player -> Scripting Define Symbols: ARFOUNDATION_REMOTE_ENABLE_IOS_BLENDSHAPES
+    Please double check that iOS build target is selected in Player settings when pasting the define.
+    (separate multiple defines by semicolon)
+6. To enable the plugin to work with AR Foundation 4.0.0 or newer, add this define to ALL build targets in Scripting Define Symbols: ARFOUNDATION_4_0_OR_NEWER
+    (adding define to all build targets will allow you to switch between platforms without compilation errors)
+
+How to use:
+1. Enable Build Settings -> Development Build. This is needed to be able to connect Editor to your AR device.
+2. Build and Run a sender scene (FaceSender or PlaneAndCloudPointsSender) on AR device. Different sender scenes are required for backwards compatibility with AR Foundation 3.0.
+3. Enable AR Foundation Remote provider in Project Settings -> XR Plug-in Management -> PC, Mac & Linux Standalone.
+4. Connect Unity Editor to Player via Console -> Press arrow dropdown labeled "Editor↓" and select your AR device (or enter its IP to connect wirelessly). Please ensure the device is unlocked and sender scene is running.
+5. Run AR scene of your choice in the Editor (for example, FaceReceiver, PlaneAndCloudPointsReceiver, or FaceIOSBlendshapesReceiver scene).
+6. Leave an honest review on Asset Store and on forum :) Please let me know what features to implement next.
+
+How to uninstall:
+1. Delete ARFOUNDATION_REMOTE_ENABLE_IOS_BLENDSHAPES from Scripting Define Symbols.
+2. Select an Installer object and press UnInstall button.
+3. Delete the folder: Assets/Plugins/ARFoundationRemoteInstaller.
+4. Delete ARFOUNDATION_4_0_OR_NEWER from Scripting Define Symbols.
+
+How to run in Unity 2019.2.17:
+1. Install the plugin as normal, you'll get compilation errors in com.unity.xr.management.
+2. Downgrade com.unity.xr.management package to v3.0.3 via Package Manager.
+3. Make sure the version of AR packages is 3.0.1 (ARCore XR Plugin 3.0.1, ARKit XR Plugin 3.0.1, ARKit Face Tracking 3.0.1, etc.).
+
+How to simulate touch input in Editor:
+1. If your app uses only one touch at a time, you can use Input.GetMouseButtonDown(0), Input.GetMouseButton(0), Input.GetMouseButtonUp(0) and Input.mousePosition to write a code that will work on all platforms the same way (including Editor).
+2. If you already have a lot of code that relies on touch input and you wish to test it in Editor, you can replace all calls to UnityEngine.Input with ARFoundationRemote.Input by putting this line on top of every script that handles touch input:
+using Input = ARFoundationRemote.Input;
+3. There is no simple way to simulate multitouch in Editor rather than use TouchScript plugin (it will require re-writing all your multitouch logic to TouchScript components) or similar solution.

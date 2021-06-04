@@ -1,0 +1,10 @@
+## [3.3.5] - 2020-06-05
+### Added
+- ARKit Blendshapes
+
+## [3.2.0] - 2020-06-03
+### Added
+- Face Tracking (face mesh, face pose, eye tracking)
+
+### Changed
+- Separate scenes into sender and receiver scenes. This is done for backward compatibility with AR Foundation 3.0 (this version does not support changing camera facing direction).
