@@ -5,15 +5,12 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
+  - enabled: 1
     path: Assets/Project/Scenes/MainScene.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
-  - enabled: 1
+  - enabled: 0
     path: Assets/Plugins/ARFoundationRemoteInstaller/Scenes/FaceSender.unity
     guid: 03375166c19ec4ca594baa1ffa4a669b
-  - enabled: 0
-    path: Assets/ARFoundation/Samples/Scenes/FaceTracking/FaceMesh.unity
-    guid: 047514b96a5d44d6bb0acbfa06ace943
   - enabled: 0
     path: Assets/ARFoundation/Samples/Scenes/FaceTracking/FacePose.unity
     guid: d8b65509a10894e1dbb93c799ececfd9
